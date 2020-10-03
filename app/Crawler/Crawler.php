@@ -16,7 +16,7 @@ class Crawler
 
 	private $camaraParams = [
 		'page' => '1',
-		'step' => '211',
+		'step' => '970',
 		'lst_status' => '',
 		'txt_assunto' => ''	,
 		'dt_public' => ''	,
@@ -45,6 +45,46 @@ class Crawler
 	{
 		$this->cliente = $cliente;
 	}
+
+
+	public function simpleRequest($data, $options = [])
+    {
+    	$ch = curl_init();
+    	//$url = is_array($data) ? $data['url'] : $data;
+    	//curl_setopt($ch, CURLOPT_URL,            $url);
+    	curl_setopt($ch, CURLOPT_TIMEOUT, 40000);
+    	curl_setopt($ch, CURLOPT_HEADER,         1);
+    	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    	curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/6.0 (Windows; U; Windows NT 5.1; pt-BR; rv:1.9.5.6) Gecko/20054986 Firefox/2.0.7.6");
+
+    	$url = $data . '?' . http_build_query($this->camaraParams);
+		curl_setopt($ch, CURLOPT_URL, $url);
+    	
+
+    	if(is_array($data))
+    	{
+    		if(!empty($data['post']))
+    		{
+    			curl_setopt($ch, CURLOPT_POST,       1);
+    			curl_setopt($ch, CURLOPT_POSTFIELDS, $data['post']);
+    		}
+    	}
+
+    	if(!empty($options))
+    	{
+    		curl_setopt_array($ch, $options);
+    	}
+
+    	$result = curl_exec($ch);
+    	//dd($result);
+    	//$this->info = curl_getinfo($ch, CURLINFO_REDIRECT_URL);
+    	curl_close($ch);
+    	$dom = new \DOMDocument();
+		@$dom->loadHTML($result);
+		return $xpath = new \DOMXpath($dom);
+    	//$dom = HtmlDomParser::str_get_html($result);
+    	//return $dom;
+    }
 
 
 	public function getData($query, $page)
@@ -121,12 +161,14 @@ class Crawler
 	{
 		$url = 'https://sapl.bauru.sp.leg.br/generico/materia_pesquisar_proc';
 		//$url = 'https://sapl.bauru.sp.leg.br/generico/materia_pesquisar_proc?incluir=0&existe_ocorrencia=0&txt_numero=&txt_ano=&txt_npc=&txt_num_protocolo=&dt_apres=01%2F01%2F2017&dt_apres2=31%2F01%2F2017&dt_public=&dt_public2=&hdn_cod_autor=472&hdn_cod_autor_new_value=false&txt_assunto=&rad_tramitando=&lst_localizacao=&lst_status=&rd_ordenacao=1&txt_relator=&lst_cod_partido=&chk_coautor=&btn_materia_pesquisar=Pesquisar';
-		$dom = $this->getDom($url);
+		//$dom = $this->getDom($url);
+		$dom = $this->simpleRequest($url);
 
-
+		//dd($dom);
 		//$links = $dom->find('table tbody tr td[class=texto] a');
-		$links = $dom->find('table tr td[class=texto] a');
-
+		//$links = $dom->find('table tr td[class=texto] a');
+		$links = $dom->query("//table/tr/td[@class='texto']/a");
+		//dd($links);
 		foreach ($links as $link) {
 			echo $link->getAttribute('href');
 			echo '<br>';
