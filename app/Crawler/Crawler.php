@@ -28,7 +28,7 @@ class Crawler
 		'txt_relator' => '',
 		'hdn_cod_autor' => '2' , // id vereador
 		'txt_numero' => '',
-		'rd_ordenacao' => '2',
+		'rd_ordenacao' => '1',
 		'rad_tramitando' => '',
 		'dt_public2' => '',
 		'existe_ocorrencia' => '0',
@@ -202,11 +202,16 @@ class Crawler
 			}elseif ($fieldset->length == 4) {
 				echo 'normal';
 				echo '<br>';
+				echo '<a href="'.$href.'" target="_blank">Matéria 4 fieldset</a>';
 				echo '<br>';
 			}else{
 				echo 'Verificar este:';
+				echo '  tem  '. $fieldset->length . 'fieldset';
 				echo '<br>';
 				echo $href;
+				//$endereco = $href;
+				echo '<br>';
+				echo '<a href="'.$href.'" target="_blank">Matéria' .$fieldset->length. ' fieldset</a>';
 				foreach (range(0, 150) as $number) {
 					echo '#';
 				}
