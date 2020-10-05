@@ -191,7 +191,7 @@ class Crawler
 			$fieldset = $dom->query("//fieldset");
 			//dd($fieldset);
 
-			$texto = $fieldset->item(1)->getElementsByTagName('tr')->item(2)->getElementsByTagName('td')->item(0)->getElementsByTagName('b')->item(0)->textContent;
+			//$texto = $fieldset->item(1)->getElementsByTagName('tr')->item(2)->getElementsByTagName('td')->item(0)->getElementsByTagName('b')->item(0)->textContent;
 
 			//dd($texto);
 			if($fieldset->length == 5){
