@@ -20,9 +20,9 @@ class Crawler
 		'lst_status' => '',
 		'txt_assunto' => ''	,
 		'dt_public' => ''	,
-		'dt_apres2' => '31/12/2020'	,
+		'dt_apres2' => '31/10/2017'	,
 		'btn_materia_pesquisar' => 'Pesquisar' ,
-		'dt_apres' => '01/01/2017'	,
+		'dt_apres' => '23/10/2017'	,
 		'txt_ano' => ''	,
 		'incluir' => '0',
 		'txt_relator' => '',
@@ -183,12 +183,13 @@ class Crawler
 
 		
 
-		foreach ($links as $link) {
+		foreach ($links as $key => $link) {
 			$href = $link->getAttribute('href');
 			//echo $href;
 			$dom = $this->simpleRequest($href);
 
-			$fieldset = $dom->query("//fieldset");
+			$fieldset = $dom->query("//div[@id='conteudo']/fieldset");
+			//$fieldset = $dom->query("//fieldset");
 			//dd($fieldset);
 
 			//$texto = $fieldset->item(1)->getElementsByTagName('tr')->item(2)->getElementsByTagName('td')->item(0)->getElementsByTagName('b')->item(0)->textContent;
@@ -205,7 +206,9 @@ class Crawler
 				echo '<a href="'.$href.'" target="_blank">Matéria 4 fieldset</a>';
 				echo '<br>';
 			}else{
-				echo 'Verificar este:';
+				
+				echo $key;
+				echo ' Verificar este:';
 				echo '  tem  '. $fieldset->length . 'fieldset';
 				echo '<br>';
 				echo $href;
