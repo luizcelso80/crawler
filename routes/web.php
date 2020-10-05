@@ -22,5 +22,5 @@ Route::post('/confianca', 'CrawlerController@confianca');
 
 Route::get('/phantom', 'CrawlerController@phantom');
 
-Route::get('/camara', 'CrawlerController@camaraBauru');
+Route::get('/camara/{id}/{quantidade}', 'CrawlerController@camaraBauru');
 

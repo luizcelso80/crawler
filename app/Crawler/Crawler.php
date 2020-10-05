@@ -157,8 +157,11 @@ class Crawler
 		}
 	}
 
-	public function getCamara()
+	public function getCamara($idVereador, $quantidade)
 	{
+		$this->camaraParams['hdn_cod_autor'] = $idVereador;
+		$this->camaraParams['step'] = $quantidade;
+
 		$url = 'https://sapl.bauru.sp.leg.br/generico/materia_pesquisar_proc';
 		//$url = 'https://sapl.bauru.sp.leg.br/generico/materia_pesquisar_proc?incluir=0&existe_ocorrencia=0&txt_numero=&txt_ano=&txt_npc=&txt_num_protocolo=&dt_apres=01%2F01%2F2017&dt_apres2=31%2F01%2F2017&dt_public=&dt_public2=&hdn_cod_autor=472&hdn_cod_autor_new_value=false&txt_assunto=&rad_tramitando=&lst_localizacao=&lst_status=&rd_ordenacao=1&txt_relator=&lst_cod_partido=&chk_coautor=&btn_materia_pesquisar=Pesquisar';
 		$dom = $this->getDom($url);

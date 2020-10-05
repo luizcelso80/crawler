@@ -28,7 +28,8 @@ class CrawlerController extends Controller
 
 	public function camaraBauru(Request $request)
 	{
-		$data = $this->crawler->getCamara();
+		//dd($request->id);
+		$data = $this->crawler->getCamara($request->id, $request->quantidade);
 	}
 
 
